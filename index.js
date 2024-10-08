@@ -15,4 +15,6 @@ app.use((error, req, res, next) => {
     return res.status(500).json({msg: "Algo deu errado", results: false, status: 500})
 })
 
+app.use((req, res, next) => res.status(404).json({msg: "Página não encontrada.", results: false, status: 404}))
+
 app.listen(PORT, () => console.log(`http://localhost:${PORT}`))

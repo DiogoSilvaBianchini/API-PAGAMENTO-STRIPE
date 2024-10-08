@@ -18,6 +18,15 @@ class Services{
         }
     }
 
+    async findOne(query){
+        try {
+            const find = await this.model.findOne(query)
+            return find
+        } catch (error) {
+            throw new Error(error)
+        }
+    }
+
     async findById(id){
         try {
             const find = await this.model.findById({_id: id})

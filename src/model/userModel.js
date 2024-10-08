@@ -17,6 +17,12 @@ const userSchema = new Schema({
         type: Number,
         required: [true, "Numero de telefone é obrigátorio"]
     },
+    auth: {
+        type: String,
+        required: [true, "Nivel de autorização, não recebida."],
+        enum: ['Client', "Manager", "Dev"],
+        default: 'Client'
+    },
     "purchase_history": {
         type: Array,
         default: []
