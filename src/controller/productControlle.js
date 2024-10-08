@@ -8,7 +8,7 @@ class ProductController{
     static async getAll(req,res,next){
         try {
             const products = await productService.findAll({})
-            const msg = endPointReturn("Todos os produtos registrados", products, 200)
+            const msg = endPointReturn("Produtos registrados", products, 200)
             return res.status(200).json(msg)
         } catch (error) {
             next(error)
@@ -49,7 +49,7 @@ class ProductController{
             if(stock) payload.stock = stock
 
             await productService.update(id, payload) 
-            const msg = endPointReturn("Produto registrado com sucesso.", true, 201)
+            const msg = endPointReturn("Produto atualizado com sucesso.", true, 201)
             return res.status(201).json(msg)
         } catch (error) {
             next(error)
