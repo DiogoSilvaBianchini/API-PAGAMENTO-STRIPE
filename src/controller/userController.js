@@ -7,7 +7,7 @@ const service = new Services(userModel)
 class UserController{
     static async findAllUser(req,res,next){
         try {
-            const users = await service.findAll()
+            const users = await service.findAll({}, ["-password", "-fone"])
             const msg = endPointReturn("Todos os usuario registrados.", users, 200)
             return res.status(200).json(msg)
         } catch (error) {

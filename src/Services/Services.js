@@ -3,9 +3,9 @@ class Services{
         this.model = model
     }
 
-    async findAll(){
+    async findAll(query, list){
         try {
-            const find = await this.model.find({})
+            const find = await this.model.find(query ? query : {}, list)
 
             if(find.length > 0){
                 return find
