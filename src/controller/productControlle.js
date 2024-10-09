@@ -1,10 +1,32 @@
 const productModel = require("../model/productModel")
 const Service = require("../Services/Services")
 const endPointReturn = require("../utils/endPointReturn")
+const stripe = require("stripe")(process.env.GETWAY_SECRET_KEY)
 
 const productService = new Service(productModel)
 
 class ProductController{
+
+    static async payment(req,res,next){
+        try {
+            const {id} = req.params
+
+            const findProduct = await productService.findOne({_id: id})
+
+            const payment = await stripe.paymentIntents.create({
+                amount: Math.floor(findProduct.price) * 100,
+                currency: "brl",
+                payment_method: 'pm_card_visa',
+                "description": findProduct.title
+            })
+
+            console.log(payment)
+            return res.status(200).json({msg: "ok"})
+        } catch (error) {
+            next(error)
+        }
+    }
+
     static async getAll(req,res,next){
         try {
             const products = await productService.findAll({})

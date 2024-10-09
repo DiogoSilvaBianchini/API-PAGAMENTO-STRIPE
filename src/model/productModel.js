@@ -15,7 +15,11 @@ const productSchema = new Schema({
     },
     describe: {
         type: String,
-        required: [true, "Descrição do produto é obrigátorio"]
+        required: [true, "Descrição do produto é obrigátorio."]
+    },
+    "urlImgs": {
+        type: Array,
+        required: [true, "Imagem do produto não recebida."]
     }
 },{timestamps: true})
 
