@@ -2,8 +2,12 @@ import './style.css'
 import PropTypes from "prop-types"
 import { Link, NavLink } from "react-router-dom"
 import LoginForm from '../LoginForm/LoginForm'
+import { useState } from 'react'
 
 const Header = ({auth}) => {
+
+    const [loginScreen, setLoginScreen] = useState(false)
+
   return (
     <header className='header-container'>
         <Link to={"/"}>
@@ -22,7 +26,7 @@ const Header = ({auth}) => {
                 </>:
                 <>
                     <li>
-                        <NavLink className={({isActive}) => isActive ? "link-button active":"link-button"} to={"/login"}>Login</NavLink>
+                        <button className={"text-button"} onClick={() => setLoginScreen(true)}>Login</button>
                     </li>
                     <li>
                         <NavLink className={({isActive}) => isActive ? "link-button active":"link-button"} to={"/register"}>Registre-se</NavLink>
@@ -30,7 +34,7 @@ const Header = ({auth}) => {
                 </>
             }
         </ul>
-        <LoginForm active={true} />
+        <LoginForm active={loginScreen} setLoginScreen={setLoginScreen}/>
     </header>
   )
 }

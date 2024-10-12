@@ -36,6 +36,12 @@ button{
   cursor: pointer;
 }
 
+.text-button{
+  background-color: transparent;
+  border: none;
+  font-size: 1rem;
+}
+
 .link-button{
   padding: 4px 16px;
   border-radius: 16px;
@@ -45,4 +51,8 @@ button{
 .active{
   color: #fff;
   background-color: #3a86ff;
+}
+
+.none{
+  display: none;
 }

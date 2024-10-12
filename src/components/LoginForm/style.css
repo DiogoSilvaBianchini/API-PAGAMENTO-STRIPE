@@ -37,15 +37,19 @@
 }
 
 .login-screen form label, .login-screen form button{
-    min-width: 200px;
+    min-width: 220px;
 }
 
 .login-screen form button{
     border: none;
     background-color: #222;
     color: #fff;
-    padding: 4px;
-    border-radius: 8px;
+    padding: 8px 16px;
+}
+
+.login-screen form > span{
+    font-size: 14px;
+    color: #aaa;
 }
 
 .login-screen form button:hover{
