@@ -7,6 +7,34 @@ const productService = new Service(productModel)
 
 class ProductController{
 
+    static async createNewProductStripe(req,res,next){
+        try {
+            const {title, description, price} = req.body
+
+            const product = await stripe.products.create({
+                name: title,
+                description
+            })
+
+            const setPrice = await stripe.prices.create({
+                unit_amount: Math.floor(price) * 100,
+                currency: 'brl',
+                recurring: {
+                    interval: 'month'
+                },
+                product: product.id
+            })
+
+            console.log(product, setPrice)
+
+            const msg = endPointReturn("Produto registrado com sucesso!", {id: product.id, price: setPrice.id}, 200)
+            return res.status(200).json({msg})
+
+        } catch (error) {
+            next(error)
+        }
+    }
+
     static async payment(req,res,next){
         try {
             const {id} = req.params
@@ -16,12 +44,10 @@ class ProductController{
             const payment = await stripe.paymentIntents.create({
                 amount: Math.floor(findProduct.price) * 100,
                 currency: "brl",
-                payment_method: 'pm_card_visa',
                 "description": findProduct.title
             })
 
-            console.log(payment)
-            return res.status(200).json({msg: "ok"})
+            return res.status(200).json({msg: "Payment gerado com sucesso", results:payment.client_secret, status: 200})
         } catch (error) {
             next(error)
         }
