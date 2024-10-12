@@ -3,10 +3,12 @@ import PropTypes from "prop-types"
 import { Link, NavLink } from "react-router-dom"
 import LoginForm from '../LoginForm/LoginForm'
 import { useState } from 'react'
+import RegisterForm from '../RegisterForm/RegisterForm'
 
 const Header = ({auth}) => {
 
     const [loginScreen, setLoginScreen] = useState(false)
+    const [registerScreen, setRegisterScreen] = useState(true)
 
   return (
     <header className='header-container'>
@@ -35,6 +37,7 @@ const Header = ({auth}) => {
             }
         </ul>
         <LoginForm active={loginScreen} setLoginScreen={setLoginScreen}/>
+        <RegisterForm active={registerScreen} setRegisterWindow={setRegisterScreen}/>
     </header>
   )
 }

@@ -20,12 +20,16 @@ const LoginForm = ({active, setLoginScreen}) => {
     }
 
 
-    const closeLoginWindow = () => {
-      setLoginScreen(false)
+    const closeLoginWindow = (e) => {
+      if(e.target.className.includes("login-screen")){
+        setLoginScreen(false)
+      }
     }
+
+    
   return (
-    <div className={active ? "login-screen":"none"} onClick={closeLoginWindow} ref={containerRef}>
-        <form action="">
+    <div className={active ? "login-screen":"none"} onClick={closeLoginWindow}  ref={containerRef}>
+        <form>
             <div className="apresentaion">
                 <img src="logo.webp" alt="Logo com os dizeres HAPPY CART" />
                 <h2>Bem-vindo</h2>
