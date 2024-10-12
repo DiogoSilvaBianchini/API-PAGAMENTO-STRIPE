@@ -1,8 +1,11 @@
 import './style.css'
+import Card from '../../components/Card/Card'
 
 const Home = () => {
   return (
-    <div>Home</div>
+    <div className='home-container'>
+      <Card />
+    </div>
   )
 }
 

@@ -9,7 +9,7 @@ function App() {
       <BrowserRouter>
         <Header auth={false}/>
         <Routes>
-          <Route to="/" element={<Home />}/>
+          <Route path="/" element={<Home />}/>
         </Routes>
       </BrowserRouter>
     </>
