@@ -1,0 +1,53 @@
+.login-screen{
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    background-color: #1111118e;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-screen form{
+    min-width: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+    border: 8px;
+    padding: 16px 8px;
+    gap: 16px;
+    border-radius: 8px;
+}
+
+.login-screen form .apresentaion{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+}
+
+.login-screen form .apresentaion span{
+    color: #c4c4c4;
+    font-size: 14px;
+}
+
+.login-screen form label, .login-screen form button{
+    min-width: 200px;
+}
+
+.login-screen form button{
+    border: none;
+    background-color: #222;
+    color: #fff;
+    padding: 4px;
+    border-radius: 8px;
+}
+
+.login-screen form button:hover{
+    background-color: #333;
+}

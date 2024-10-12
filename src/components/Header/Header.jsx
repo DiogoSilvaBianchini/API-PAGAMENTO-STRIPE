@@ -1,6 +1,7 @@
 import './style.css'
 import PropTypes from "prop-types"
 import { Link, NavLink } from "react-router-dom"
+import LoginForm from '../LoginForm/LoginForm'
 
 const Header = ({auth}) => {
   return (
@@ -29,12 +30,13 @@ const Header = ({auth}) => {
                 </>
             }
         </ul>
+        <LoginForm active={true} />
     </header>
   )
 }
 
 Header.propTypes = {
-    auth: PropTypes.bool.isRequired
+    auth: PropTypes.string.isRequired
 }
 
 export default Header
