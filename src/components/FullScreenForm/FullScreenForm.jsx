@@ -1,11 +1,11 @@
 import './style.css'
 import PropTypes from 'prop-types';
 
-const FullScreenForm = ({children, active, setLoginScreen, errorText}) => {
+const FullScreenForm = ({children, active, desactive, errorText}) => {
 
     const closeLoginWindow = (e) => {
       if(e.target.className.includes("full-screen")){
-        setLoginScreen(false)
+        desactive(false)
       }
     }
 
@@ -30,7 +30,7 @@ const FullScreenForm = ({children, active, setLoginScreen, errorText}) => {
 FullScreenForm.propTypes = {
   children: PropTypes.array.isRequired,
   active: PropTypes.bool.isRequired,
-  setLoginScreen: PropTypes.func.isRequired,
+  desactive: PropTypes.func.isRequired,
   errorText: PropTypes.string
 }
 

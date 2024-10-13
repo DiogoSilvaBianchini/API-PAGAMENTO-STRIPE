@@ -13,11 +13,13 @@ const LabelInput = ({title, typeField, value, change, body, id}) => {
     }
   }
   
+  const idField = Math.floor(Math.random() * 1E4)
+
   return (
-    <label className="input-label" htmlFor={id}>
+    <label className="input-label" htmlFor={id + idField}>
         <span>{title}:</span>
         <input 
-            id={id}
+            id={id + idField}
             type={typeField ? typeField : "text"} 
             value={value} 
             onChange={changed}

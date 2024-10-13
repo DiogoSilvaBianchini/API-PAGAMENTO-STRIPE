@@ -18,7 +18,7 @@ const RegisterForm = ({registerScreen, setRegisterScreen}) => {
     }
 
   return (
-    <FullScreenForm active={registerScreen} setLoginScreen={setRegisterScreen}>
+    <FullScreenForm active={registerScreen} desactive={setRegisterScreen}>
         <LabelInput title='Name' value={body.name} change={setBody} id={"name"} body={body}/>
         <LabelInput title='E-mail' value={body.email} change={setBody} id={"email"} body={body}/>
         <LabelInput title='Password' typeField='password' value={body.password} change={setBody} id={"password"} body={body}/>

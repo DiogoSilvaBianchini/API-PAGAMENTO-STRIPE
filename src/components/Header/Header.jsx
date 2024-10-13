@@ -4,10 +4,12 @@ import { Link, NavLink } from "react-router-dom"
 import { useState } from 'react'
 import LoginForm from '../LoginForm/LoginForm'
 import RegisterForm from '../RegisterForm/RegisterForm'
+import SimplifieldForm from '../SimplifieldForm/SimplifieldForm'
 
 const Header = ({auth}) => {
     const [loginScreen, setLoginScreen] = useState(false)   
     const [registerScreen, setRegisterScreen] = useState(false)   
+    const [simplifieldForm, setSimplifieldForm] = useState(false)   
 
   return (
     <header className='header-container'>
@@ -35,8 +37,9 @@ const Header = ({auth}) => {
                 </>
             }
         </ul>
-        <LoginForm loginScreen={loginScreen} setLoginScreen={setLoginScreen}/>
+        <LoginForm loginScreen={loginScreen} setLoginScreen={setLoginScreen} setSimplifieldForm={setSimplifieldForm}/>
         <RegisterForm registerScreen={registerScreen} setRegisterScreen={setRegisterScreen}/>
+        <SimplifieldForm simplifieldForm={simplifieldForm} setSimplifieldForm={setSimplifieldForm} loginScreen={setLoginScreen}/>
     </header>
   )
 }
