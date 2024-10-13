@@ -11,10 +11,10 @@ const LoginForm = ({loginScreen, setLoginScreen, setSimplifieldForm}) => {
     const [body, setBody] = useState({email: "", password: ""})
     const [error, setError] = useState(false)
 
-    const {setToken} = useContext(UserContext)
+    const {setToken, setBodyTemp} = useContext(UserContext)
 
     const googleOnSucess = async ({credential}) => {
-        const {email} = jwtDecode(credential)
+        const {name, email} = jwtDecode(credential)
         const req = await fetch("http://localhost:8082/user/oAuth/login", {
             headers: {"Content-Type":"Application/json"},
             method: "POST",
@@ -28,11 +28,13 @@ const LoginForm = ({loginScreen, setLoginScreen, setSimplifieldForm}) => {
         }else{
             setLoginScreen(false)
             setSimplifieldForm(true)
+            console.log(name, email)
+            setBodyTemp({name, email})
         }
     }
 
-    const googleOnFailed = (err) => {
-        console.log(err)
+    const googleOnFailed = () => {
+        setError("Erro ao se conectar com o google, atualize a pagina e tente novamente.")
     }
 
     const loginIn = async () => {
@@ -47,11 +49,12 @@ const LoginForm = ({loginScreen, setLoginScreen, setSimplifieldForm}) => {
             setError(res.msg)
         }else{
             setToken(res.results)
+            setLoginScreen(false)
         }
     }
 
     return (
-        <FullScreenForm active={loginScreen} desactive={setLoginScreen} errorText={error ? error:""}>
+        <FullScreenForm active={loginScreen} desactive={setLoginScreen} errorText={error ? error:""} closeClick={true}>
             <LabelInput title='E-mail' value={body.email} change={setBody} body={body} id={"email"}/>
             <LabelInput title='Password' typeField='password' value={body.password} change={setBody} body={body} id={"password"}/>
             <button className='darkButton' onClick={loginIn}>Login</button>

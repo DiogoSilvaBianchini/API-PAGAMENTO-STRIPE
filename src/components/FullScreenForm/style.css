@@ -31,6 +31,12 @@
     gap: 4px;
 }
 
+.full-screen form .apresentaion .error-text{
+    width: 250px;
+    text-align: center;
+    margin: 10px 0px;
+}
+
 .full-screen form label, .full-screen form button{
     min-width: 220px;
 }
