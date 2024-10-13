@@ -32,10 +32,6 @@ img{
   max-height: 100%;
 }
 
-button{
-  cursor: pointer;
-}
-
 .text-button{
   background-color: transparent;
   border: none;
@@ -55,4 +51,38 @@ button{
 
 .none{
   display: none;
+}
+
+
+button{
+  cursor: pointer;
+  padding: 8px 16px;
+  transition: .2s;
+  border-radius: 15px;
+}
+
+button:hover{
+  border-radius: 5px;
+}
+
+.darkButton{
+  border: none;
+  background-color: #222;
+  color: #fff;
+}
+
+.outLineButton{
+  border: 1px solid #222;
+  background-color: transparent;
+  color: #222;
+}
+
+.error-text{
+  font-size: 14px;
+  color: rgb(255, 0, 76);
+}
+
+.small-text{
+  font-size: 14px;
+  color: #aaa;
 }

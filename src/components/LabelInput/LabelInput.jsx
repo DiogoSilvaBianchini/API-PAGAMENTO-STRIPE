@@ -1,20 +1,23 @@
 import './style.css'
 import PropTypes from "prop-types"
 
-const LabelInput = ({title, typeField, value, change, changeBody}) => {
+const LabelInput = ({title, typeField, value, change, body, id}) => {
   
   const changed = (e) => {
-    if(change){
+    if(!body){
       change(e.target.value)
     }else{
-      changeBody[value] = e.target.value
+      const newBody = {...body}
+      newBody[id] = e.target.value
+      change(newBody)
     }
   }
   
   return (
-    <label className="input-label">
+    <label className="input-label" htmlFor={id}>
         <span>{title}:</span>
         <input 
+            id={id}
             type={typeField ? typeField : "text"} 
             value={value} 
             onChange={changed}
@@ -26,9 +29,10 @@ const LabelInput = ({title, typeField, value, change, changeBody}) => {
 LabelInput.propTypes = {
     title: PropTypes.string.isRequired,
     typeField: PropTypes.string,
-    value: PropTypes.string.isRequired,
+    value: PropTypes.string,
     change: PropTypes.func,
-    changeBody: PropTypes.func
+    body: PropTypes.object,
+    id: PropTypes.string
 }
 
 export default LabelInput

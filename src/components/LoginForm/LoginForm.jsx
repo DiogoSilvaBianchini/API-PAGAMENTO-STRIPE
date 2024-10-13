@@ -1,53 +1,56 @@
-import './style.css'
-import { useRef, useState } from "react"
-import LabelInput from "../LabelInput/LabelInput"
-import { GoogleLogin } from '@react-oauth/google';
+import { GoogleLogin } from '@react-oauth/google'
+import FullScreenForm from '../FullScreenForm/FullScreenForm'
+import LabelInput from '../LabelInput/LabelInput'
 import {jwtDecode} from 'jwt-decode'
-import PropTypes from 'prop-types';
+import { useContext, useState } from 'react'
+import PropTypes from 'prop-types'
+import UserContext from '../../context/userContext'
 
-const LoginForm = ({active, setLoginScreen}) => {
-    const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("")
-    const containerRef = useRef()
+const LoginForm = ({loginScreen, setLoginScreen}) => {
+
+    const [body, setBody] = useState({email: "", password: ""})
+    const [error, setError] = useState(false)
+
+    const {setToken} = useContext(UserContext)
 
     const googleOnSucess = ({credential}) => {
-      const {email} = jwtDecode(credential)
-      console.log(email)
+        const {email} = jwtDecode(credential)
+        console.log(email)
     }
 
     const googleOnFailed = (err) => {
-      console.log(err)
+        console.log(err)
     }
 
+    const loginIn = async () => {
+        const req = await fetch("http://localhost:8082/user/login", {
+            headers: {"Content-Type":"Application/json"},
+            method: "POST",
+            body: JSON.stringify(body)
+        })
 
-    const closeLoginWindow = (e) => {
-      if(e.target.className.includes("login-screen")){
-        setLoginScreen(false)
-      }
+        const res = await req.json()
+        if(!res.results){
+            setError(res.msg)
+        }else{
+            setToken(res.results)
+        }
     }
 
-    
-  return (
-    <div className={active ? "login-screen":"none"} onClick={closeLoginWindow}  ref={containerRef}>
-        <form>
-            <div className="apresentaion">
-                <img src="logo.webp" alt="Logo com os dizeres HAPPY CART" />
-                <h2>Bem-vindo</h2>
-                <span>A forma mais rápida de compras!</span>
-            </div>
-            <LabelInput title='E-mail' value={email} change={setEmail}/>
-            <LabelInput title='Password' typeField='password' value={password} change={setPassword}/>
-            <button>Login</button>
-            <span>Ou</span>
+    return (
+        <FullScreenForm active={loginScreen} setLoginScreen={setLoginScreen} errorText={error ? error:""}>
+            <LabelInput title='E-mail' value={body.email} change={setBody} body={body} id={"email"}/>
+            <LabelInput title='Password' typeField='password' value={body.password} change={setBody} body={body} id={"password"}/>
+            <button className='darkButton' onClick={loginIn}>Login</button>
+            <span className='small-text'>Ou</span>
             <GoogleLogin onSuccess={googleOnSucess} onError={googleOnFailed}/>
-        </form>
-    </div>
-  )
+        </FullScreenForm>
+    )
 }
 
 LoginForm.propTypes = {
-  active: PropTypes.bool.isRequired,
-  setLoginScreen: PropTypes.func.isRequired
+    loginScreen:  PropTypes.bool.isRequired,
+    setLoginScreen: PropTypes.func.isRequired
 }
 
 export default LoginForm

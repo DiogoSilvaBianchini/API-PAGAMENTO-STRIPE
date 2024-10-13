@@ -1,4 +1,4 @@
-.login-screen{
+.full-screen{
     width: 100vw;
     height: 100vh;
     position: absolute;
@@ -10,7 +10,7 @@
     justify-content: center;
 }
 
-.login-screen form{
+.full-screen form{
     min-width: 300px;
     display: flex;
     flex-direction: column;
@@ -23,7 +23,7 @@
     border-radius: 8px;
 }
 
-.login-screen form .apresentaion{
+.full-screen form .apresentaion{
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -31,27 +31,7 @@
     gap: 4px;
 }
 
-.login-screen form .apresentaion span{
-    color: #c4c4c4;
-    font-size: 14px;
-}
-
-.login-screen form label, .login-screen form button{
+.full-screen form label, .full-screen form button{
     min-width: 220px;
 }
 
-.login-screen form button{
-    border: none;
-    background-color: #222;
-    color: #fff;
-    padding: 8px 16px;
-}
-
-.login-screen form > span{
-    font-size: 14px;
-    color: #aaa;
-}
-
-.login-screen form button:hover{
-    background-color: #333;
-}

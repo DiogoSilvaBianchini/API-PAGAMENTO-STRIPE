@@ -1,37 +1,37 @@
-import './style.css'
-import { useRef, useState } from 'react'
+import { useState } from 'react'
+import FullScreenForm from '../FullScreenForm/FullScreenForm'
 import LabelInput from '../LabelInput/LabelInput'
 import PropTypes from 'prop-types'
 
-const RegisterForm = ({active, setRegisterWindow}) => {
-    const [body, setBody] = useState({email: "", password: ""}) 
-    const containerRef = useRef()
+const RegisterForm = ({registerScreen, setRegisterScreen}) => {
+    const [body, setBody] = useState({name: "", email: "", password: "", fone: ""})
 
-    const closeLoginWindow = () => {
-        setRegisterWindow(false)
+    const registerUser = async () => {
+      const req = await fetch("http://localhost:8082/user", {
+        headers: {"Content-Type":"Application/json"},
+        method: "POST",
+        body: JSON.stringify(body)
+      })
+
+      const res = await req.json()
+      console.log(res)
     }
 
-    console.log(body)
-
   return (
-    <div className={active ? "register-screen":"none"} onClick={closeLoginWindow} ref={containerRef}>
-        <form action="">
-            <div className="apresentaion">
-                <img src="logo.webp" alt="Logo com os dizeres HAPPY CART" />
-                <h2>Bem-vindo</h2>
-                <span>A forma mais rápida de compras!</span>
-            </div>
-            <LabelInput title='E-mail' value={body.email} changeBody={setBody}/>
-            <LabelInput title='Password' typeField='password' value={body.password} changeBody={setBody}/>
-            <button>Login</button>
-        </form>
-    </div>
+    <FullScreenForm active={registerScreen} setLoginScreen={setRegisterScreen}>
+        <LabelInput title='Name' value={body.name} change={setBody} id={"name"} body={body}/>
+        <LabelInput title='E-mail' value={body.email} change={setBody} id={"email"} body={body}/>
+        <LabelInput title='Password' typeField='password' value={body.password} change={setBody} id={"password"} body={body}/>
+        <LabelInput title='Fone' value={body.fone} change={setBody} id={"fone"} body={body}/>
+        <button className='darkButton' onClick={registerUser}>Registrar</button>
+        <button className='outLineButton' onClick={() => setRegisterScreen(false)}>Voltar</button>
+    </FullScreenForm>
   )
 }
 
 RegisterForm.propTypes = {
-    active: PropTypes.bool.isRequired,
-    setRegisterWindow: PropTypes.func.isRequired
+    registerScreen: PropTypes.bool.isRequired,
+    setRegisterScreen: PropTypes.func.isRequired
 }
 
 export default RegisterForm

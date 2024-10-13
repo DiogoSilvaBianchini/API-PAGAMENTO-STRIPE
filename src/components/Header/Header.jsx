@@ -1,14 +1,13 @@
 import './style.css'
 import PropTypes from "prop-types"
 import { Link, NavLink } from "react-router-dom"
-import LoginForm from '../LoginForm/LoginForm'
 import { useState } from 'react'
+import LoginForm from '../LoginForm/LoginForm'
 import RegisterForm from '../RegisterForm/RegisterForm'
 
 const Header = ({auth}) => {
-
-    const [loginScreen, setLoginScreen] = useState(false)
-    const [registerScreen, setRegisterScreen] = useState(true)
+    const [loginScreen, setLoginScreen] = useState(false)   
+    const [registerScreen, setRegisterScreen] = useState(false)   
 
   return (
     <header className='header-container'>
@@ -31,13 +30,13 @@ const Header = ({auth}) => {
                         <button className={"text-button"} onClick={() => setLoginScreen(true)}>Login</button>
                     </li>
                     <li>
-                        <NavLink className={({isActive}) => isActive ? "link-button active":"link-button"} to={"/register"}>Registre-se</NavLink>
+                    <button className={"text-button"} onClick={() => setRegisterScreen(true)}>Registrar-se</button>
                     </li>
                 </>
             }
         </ul>
-        <LoginForm active={loginScreen} setLoginScreen={setLoginScreen}/>
-        <RegisterForm active={registerScreen} setRegisterWindow={setRegisterScreen}/>
+        <LoginForm loginScreen={loginScreen} setLoginScreen={setLoginScreen}/>
+        <RegisterForm registerScreen={registerScreen} setRegisterScreen={setRegisterScreen}/>
     </header>
   )
 }
