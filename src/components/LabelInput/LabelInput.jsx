@@ -4,13 +4,31 @@ import PropTypes from "prop-types"
 const LabelInput = ({title, typeField, value, change, body, id}) => {
   
   const changed = (e) => {
-    if(!body){
-      change(e.target.value)
+    if(typeField == "number"){
+      numberField(e)
     }else{
-      const newBody = {...body}
-      newBody[id] = e.target.value
-      change(newBody)
+      if(!body){
+        change(e.target.value)
+      }else{
+        largeForm(e)
+      }
+    }    
+  }
+
+  const numberField = (e) => {
+    if(!isNaN(e.target.value)){
+      if(!body){
+        change(e.target.value)
+      }else{
+        largeForm(e)
+      }
     }
+  }
+
+  const largeForm = (e) => {
+    const newBody = {...body}
+    newBody[id] = e.target.value
+    change(newBody)
   }
   
   const idField = Math.floor(Math.random() * 1E4)
@@ -20,7 +38,7 @@ const LabelInput = ({title, typeField, value, change, body, id}) => {
         <span>{title}:</span>
         <input 
             id={id + idField}
-            type={typeField ? typeField : "text"} 
+            type={typeField ?  typeField == "number" ? "text": typeField : "text"} 
             value={value} 
             onChange={changed}
         />

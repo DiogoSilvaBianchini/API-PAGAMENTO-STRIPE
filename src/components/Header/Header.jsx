@@ -5,6 +5,7 @@ import { useState } from 'react'
 import LoginForm from '../LoginForm/LoginForm'
 import RegisterForm from '../RegisterForm/RegisterForm'
 import SimplifieldForm from '../SimplifieldForm/SimplifieldForm'
+import AddIcon from '@mui/icons-material/Add';
 
 const Header = ({auth}) => {
     const [loginScreen, setLoginScreen] = useState(false)   
@@ -21,10 +22,13 @@ const Header = ({auth}) => {
                 auth ? 
                 <>
                     <li>
-                        <NavLink className={({isActive}) => isActive ? "link-button active":"link-button"} to={"/perfil"}>Perfil</NavLink>
+                        <NavLink className={({isActive}) => isActive ? "link-button active":"link-button"} to={"/products"}>Produtos</NavLink>
                     </li>
                     <li>
                         <NavLink className={({isActive}) => isActive ? "link-button active":"link-button"} to={"/cart"}>Carrinho</NavLink>  
+                    </li>
+                    <li>
+                        <NavLink className={({isActive}) => isActive ? "plus-button plus-button-active":"plus-button"} to={"/productRegister"}><AddIcon /></NavLink>  
                     </li>
                 </>:
                 <>

@@ -6,12 +6,15 @@ import { useContext, useState } from 'react'
 import PropTypes from 'prop-types'
 import UserContext from '../../context/userContext'
 
+
 const LoginForm = ({loginScreen, setLoginScreen, setSimplifieldForm}) => {
 
     const [body, setBody] = useState({email: "", password: ""})
     const [error, setError] = useState(false)
 
-    const {setToken, setBodyTemp} = useContext(UserContext)
+    const {setToken, setBodyTemp, setCookie} = useContext(UserContext)
+
+    
 
     const googleOnSucess = async ({credential}) => {
         const {name, email} = jwtDecode(credential)
@@ -24,6 +27,7 @@ const LoginForm = ({loginScreen, setLoginScreen, setSimplifieldForm}) => {
         const res = await req.json()
         if(res.results){
             setToken(res.results)
+            setCookie("token", res.results)
             setLoginScreen(false)
         }else{
             setLoginScreen(false)
@@ -49,6 +53,7 @@ const LoginForm = ({loginScreen, setLoginScreen, setSimplifieldForm}) => {
             setError(res.msg)
         }else{
             setToken(res.results)
+            setCookie("token", res.results)
             setLoginScreen(false)
         }
     }

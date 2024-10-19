@@ -1,0 +1,56 @@
+.container-file-input{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+}
+
+.container-file-input .input-file{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px dashed #c4c4c4;
+    padding: 8px 0px;
+    cursor: pointer;
+}
+
+.container-file-input .list-preview-images{
+    width: 100%;
+    max-width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 16px;
+}
+
+.container-file-input .list-preview-images li{
+    width: 75px;
+    height: 75px;
+}
+
+.container-file-input .list-preview-images li button{
+    width: 100%;
+    height: 100%;
+    padding: 8px;
+    border: 2px dashed #c4c4c4;
+    border-radius: 0px;
+}
+
+.container-file-input .list-preview-images li .activeButtonImage{
+    border-color: rgb(0, 119, 255);
+}
+
+.deleteImg{
+    background-color: transparent;
+    border: 2px dashed red;
+    border-radius: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: .4s;
+    color: red;
+}

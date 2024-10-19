@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 
 :root{
-  --background-color: #eee;
+  --background-color: #f6f6f6;
   --principal-font: 'Inter', sans-serif;
 }
 
@@ -32,6 +32,10 @@ img{
   max-height: 100%;
 }
 
+input:focus{
+  outline: none;
+}
+
 .text-button{
   background-color: transparent;
   border: none;
@@ -58,7 +62,6 @@ button{
   cursor: pointer;
   padding: 8px 16px;
   transition: .2s;
-  border-radius: 15px;
 }
 
 button:hover{
@@ -77,6 +80,30 @@ button:hover{
   color: #222;
 }
 
+.loadBtn{
+  background-color: #eee;
+  border: none;
+  border-radius: 8px;
+}
+
+.loadBtn svg{
+  color: #777;
+  animation: loadAni 1.5s infinite linear;
+}
+
+@keyframes loadAni{
+  to{
+    transform: rotate(0deg);
+  }from{
+    transform: rotate(360deg);
+  }
+}
+
+.invisible{
+  background-color: transparent;
+  border: none;
+}
+
 .error-text{
   font-size: 14px;
   color: rgb(255, 0, 76);
@@ -85,4 +112,21 @@ button:hover{
 .small-text{
   font-size: 14px;
   color: #aaa;
+}
+
+.plus-button{
+  background-color: #fca311;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  border-radius: 5px;
+  border: 2px solid transparent;
+  transition: .4s;
+}
+
+.plus-button-active{
+  background-color: transparent;
+  color: #fca311;
+  border-color: #fca311;
 }
