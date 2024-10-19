@@ -11,7 +11,21 @@ services:
       MONGO_INITDB_ROOT_USERNAME: admin
       MONGO_INITDB_ROOT_PASSWORD: admin123
     volumes:
-      - ./database:/usr/src/app
+      - ./database:/data/db
+  api:
+    image: node:latest
+    depends_on:
+      - database
+    container_name: api
+    env_file: .env
+    ports: 
+     - "${PORT}:${PORT}"
+    volumes: 
+      - .:/usr/src/app
+    working_dir: /usr/src/app
+    networks:
+      - payment_network
+    command: npm run dev
 networks:
   payment_network:
     driver: bridge

@@ -2,6 +2,7 @@ const productModel = require("../model/productModel")
 const Service = require("../Services/Services")
 const endPointReturn = require("../utils/endPointReturn")
 const stripe = require("stripe")(process.env.GETWAY_SECRET_KEY)
+const fs = require("fs")
 
 const productService = new Service(productModel)
 
@@ -16,40 +17,41 @@ class ProductController{
                 description
             })
 
-            const setPrice = await stripe.prices.create({
-                unit_amount: Math.floor(price) * 100,
+            const priceProduct = await stripe.prices.create({
+                unit_amount: Math.floor(price * 100),
                 currency: 'brl',
-                recurring: {
-                    interval: 'month'
-                },
                 product: product.id
             })
-
-            console.log(product, setPrice)
-
-            const msg = endPointReturn("Produto registrado com sucesso!", {id: product.id, price: setPrice.id}, 200)
-            return res.status(200).json({msg})
-
+            const stripeProduct = {productId: product.id, priceId: priceProduct.id}
+            next(stripeProduct)
         } catch (error) {
             next(error)
         }
     }
 
-    static async payment(req,res,next){
+    static async createCheckOut(req,res,next){
+        const {listProduct} = req.body
+        
         try {
-            const {id} = req.params
-
-            const findProduct = await productService.findOne({_id: id})
-
-            const payment = await stripe.paymentIntents.create({
-                amount: Math.floor(findProduct.price) * 100,
-                currency: "brl",
-                "description": findProduct.title
+            const query = listProduct.map(product => product.id)
+            const findProducts = await productModel.find({_id: {$in: query}}, ["payment_info"])
+            
+            const items = findProducts.map(product => {
+                const request = listProduct.filter(items => items.id == product._id)
+                return {price: product.payment_info.price_id, quantity: request[0].quantity}
             })
+           
+            const session = await stripe.checkout.sessions.create({
+                success_url: 'http://localhost:5173',
+                line_items: items,
+                mode: 'payment'
+            })
+            
+            const msg = endPointReturn("Checkout criado com sucesso!", session.url, 200)
 
-            return res.status(200).json({msg: "Payment gerado com sucesso", results:payment.client_secret, status: 200})
+            return res.status(200).json(msg)
         } catch (error) {
-            next(error)
+            
         }
     }
 
@@ -74,10 +76,11 @@ class ProductController{
         }
     }
 
-    static async create(req,res,next){
+    static async create(stripeProduct,req, res, next){
         try {
             const {title, price, describe, stock} = req.body
-            await productService.register({title, price, describe, stock})
+            await productService.register({payment_info: {product_id: stripeProduct.productId, price_id: stripeProduct.priceId}, title, price: Number(price), describe, stock: Number(stock), img: req.file.filename})
+            
             const msg = endPointReturn("Produto registrado com sucesso.", true, 201)
             return res.status(201).json(msg)
         } catch (error) {
@@ -107,8 +110,19 @@ class ProductController{
     static async delete(req,res,next){
         try {
             const {id} = req.params
-            await productService.delete(id)
-            const msg = endPointReturn("Produto removido com sucesso.", true, 201)
+
+            const findProduct = await productService.findOne({_id: id})
+
+            await fs.unlink(`../frontend/public/productImages/${findProduct.img}`, (err) => {
+                if(err){
+                    console.log(err)
+                }
+            })
+
+            await stripe.products.update(findProduct.strip_product_id, {active: false})
+            const products = await productService.delete(id)
+
+            const msg = endPointReturn("Produto removido com sucesso.", products, 201)
             return res.status(201).json(msg)
         } catch (error) {
             next(error)

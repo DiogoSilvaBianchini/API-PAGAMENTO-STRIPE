@@ -57,7 +57,8 @@ class Services{
     async delete(id){
         try{
             await this.model.findByIdAndDelete({_id: id})
-            return {results: true, error: false}
+            const products = await this.model.find()
+            return products
         } catch (error) {
             return {results: false, error}
         }

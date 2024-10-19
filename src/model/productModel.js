@@ -1,6 +1,10 @@
 const {Schema, model} = require("mongoose")
 
 const productSchema = new Schema({
+    payment_info: {
+        type: Object,
+        required: true
+    },
     title: {
         type: String,
         required: [true, "Titulo do produto é obrigátorio."]
@@ -17,8 +21,8 @@ const productSchema = new Schema({
         type: String,
         required: [true, "Descrição do produto é obrigátorio."]
     },
-    "urlImgs": {
-        type: Array,
+    "img": {
+        type: String,
         required: [true, "Imagem do produto não recebida."]
     }
 },{timestamps: true})

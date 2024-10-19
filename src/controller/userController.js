@@ -22,7 +22,7 @@ class UserController{
 
             await service.register({name, email, password: hash, fone})
 
-            const msg = endPointReturn("Usuario registrado com sucesso", false, 201)
+            const msg = endPointReturn("Usuario registrado com sucesso", true, 201)
 
             return res.status(201).json(msg)
         } catch (error) {
